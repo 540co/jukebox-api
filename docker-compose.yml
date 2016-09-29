@@ -10,6 +10,8 @@ services:
      - /usr/src/app/node_modules
     depends_on:
      - db
+    env_file:
+     - .env
   db:
     image: postgres
     expose:
