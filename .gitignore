@@ -1,4 +1,6 @@
-# Ignore Node Modules
+# Ignore Node Modules and Logs
 **/node_modules
-
 **/npm-debug.log
+
+# Ignore Application Configuration Files
+.env
