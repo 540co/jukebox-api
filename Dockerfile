@@ -1,4 +1,4 @@
-FROM node:6.6
+FROM node:4.6.0
 
 # Set up working directory
 RUN mkdir /usr/src/app
