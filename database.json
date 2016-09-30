@@ -1,0 +1,9 @@
+{
+  "defaultEnv": "jukebox-db",
+  "jukebox-db": {
+    "driver": "pg",
+    "user": {"ENV": "POSTGRES_USER"},
+    "host": {"ENV": "POSTGRES_HOST"},
+    "database": {"ENV": "POSTGRES_DB"}
+  }
+}
