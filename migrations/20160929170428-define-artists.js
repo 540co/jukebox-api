@@ -14,15 +14,20 @@ exports.setup = function(options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function(db) {
-  /*db.createTable('asdf', {
+exports.up = function(db, callback) {
+  db.createTable('artists', {
     id: {type: 'int', primaryKey: true, autoIncrement: true},
-    name: 'string'
-  })*/
+    href: 'string',
+    name: 'string',
+    createdAt: 'timestamp',
+    updatedAt: 'timestamp'
+  });
+  callback();
 };
 
-exports.down = function(db) {
-  //db.dropTable('asdf')
+exports.down = function(db, callback) {
+  db.dropTable('artists');
+  callback();
 };
 
 exports._meta = {
