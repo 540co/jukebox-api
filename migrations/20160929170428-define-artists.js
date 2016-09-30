@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('artists', {
+  db.createTable('Artist', {
     id: {
       type: 'int',
       unsigned: true,
@@ -32,7 +32,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('artists');
+  db.dropTable('Artist');
   callback();
 };
 

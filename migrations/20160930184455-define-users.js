@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Album', {
+  db.createTable('User', {
     id: {
       type: 'int',
       unsigned: true,
@@ -24,22 +24,11 @@ exports.up = function(db, callback) {
       autoIncrement: true
     },
     href: {type: 'string', notNull: true},
-    artist_id: {
-      type: 'int',
-      unsigned: true,
-      notNull: true,
-      foreignKey: {
-        name: "album_artist_id_fk",
-        table: 'Artist',
-        mapping: 'id',
-        rules: {
-          onDelete: 'NO ACTION'
-        }
-      }
-    },
-    title: {type: 'string', notNull: true},
-    coverArt: 'string',
-    releasedAt: 'date',
+    username: {type: 'string', notNull: true},
+    password: {type: 'string', notNull: true},
+    firstName: 'string',
+    lastName: 'string',
+    token: 'string',
     createdAt: {type: 'timestamp', notNull: true},
     updatedAt: {type: 'timestamp', notNull: true}
   });
@@ -47,7 +36,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('Album');
+  db.dropTable('User');
   callback();
 };
 

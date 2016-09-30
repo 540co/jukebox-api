@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('songs', {
+  db.createTable('Song', {
     id: {
       type: 'int',
       unsigned: true,
@@ -30,8 +30,8 @@ exports.up = function(db, callback) {
       unsigned: true,
       notNull: true,
       foreignKey: {
-        name: "songs_album_id_fk",
-        table: "artists",
+        name: "song_album_id_fk",
+        table: "Album",
         mapping: "id",
         rules: {
           onDelete: "NO ACTION"
@@ -46,7 +46,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('songs');
+  db.dropTable('Song');
   callback();
 };
 
