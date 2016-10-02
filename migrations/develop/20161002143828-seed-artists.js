@@ -36,8 +36,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  // TODO
-  callback();
+  db.runSql("delete from artists where 1=1", callback());
 };
 
 exports._meta = {
