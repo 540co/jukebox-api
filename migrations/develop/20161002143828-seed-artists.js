@@ -1,3 +1,5 @@
+var helper = require('../../helpers/migrations');
+
 'use strict';
 
 var dbm;
@@ -24,14 +26,7 @@ exports.up = function(db, callback) {
     ['Eric Clapton']
   ];
 
-  var counter = 0;
-  while(counter < arrayOfInserts.length) {
-    arrayOfInserts[counter].push("now()"); // Adding createdAt timestamp
-    arrayOfInserts[counter].push("now()"); // Adding createdAt timestamp
-    db.insert('artists', columns, arrayOfInserts[counter], function() {})
-    counter++;
-  }
-
+  helper.seedWithTimestamps(db, 'artists', columns, arrayOfInserts);
   callback();
 };
 
