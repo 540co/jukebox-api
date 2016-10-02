@@ -23,7 +23,7 @@ function getAttributeIdMap(db, tableName, value) {
       var map = [];
       db.runSql("select id, " + value + " from " + tableName, function(err, results) {
         for(var i=0; i< results.rows.length; i++) {
-          map[results.rows[i].id] = results.rows[i].name;
+          map[results.rows[i].id] = results.rows[i][value];
         }
         callback(map);
       });

@@ -5,7 +5,6 @@ var helper = require('../../helpers/migrations');
 var dbm;
 var type;
 var seed;
-var Promise;
 
 /**
   * We receive the dbmigrate dependency from dbmigrate initially.
@@ -15,7 +14,6 @@ exports.setup = function(options, seedLink) {
   dbm = options.dbmigrate;
   type = dbm.dataType;
   seed = seedLink;
-  Promise = options.Promise;
 };
 
 exports.up = function(db, callback) {
@@ -41,7 +39,7 @@ exports.up = function(db, callback) {
   });
 };
 
-exports.down = function(db) {
+exports.down = function(db, callback) {
   db.runSql("delete from albums where 1=1", callback());
 };
 
