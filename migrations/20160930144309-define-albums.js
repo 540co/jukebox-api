@@ -23,7 +23,6 @@ exports.up = function(db, callback) {
       notNull: true,
       autoIncrement: true
     },
-    href: {type: 'string', notNull: true},
     artist_id: {
       type: 'int',
       unsigned: true,

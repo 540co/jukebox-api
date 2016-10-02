@@ -23,7 +23,6 @@ exports.up = function(db, callback) {
       notNull: true,
       autoIncrement: true
     },
-    href: {type: "string", notNull: true},
     title: {type: "string", notNull: true},
     album_id: {
       type: 'int',
