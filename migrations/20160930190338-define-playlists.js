@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('Playlist', {
+  db.createTable('playlists', {
     id: {
       type: 'int',
       unsigned: true,
@@ -30,8 +30,8 @@ exports.up = function(db, callback) {
       unsigned: true,
       notNull: true,
       foreignKey: {
-        name: 'playlist_user_id_fk',
-        table: 'User',
+        name: 'playlists_user_id_fk',
+        table: 'users',
         mapping: 'id',
         rules: {
           onDelete: "NO ACTION"
@@ -42,15 +42,15 @@ exports.up = function(db, callback) {
     updatedAt: {type: 'timestamp', notNull: true}
   });
 
-  db.createTable('PlaylistSong', {
+  db.createTable('playlist_songs', {
     playlist_id: {
       type: 'int',
       unsigned: true,
       primaryKey: true,
       notNull: true,
       foreignKey: {
-        name: 'PlaylistSong_playlist_id_fk',
-        table: 'Playlist',
+        name: 'playlist_songs_playlist_id_fk',
+        table: 'playlists',
         mapping: 'id',
         rules: {
           onDelete: "NO ACTION"
@@ -63,8 +63,8 @@ exports.up = function(db, callback) {
       primaryKey: true,
       notNull: true,
       foreignKey: {
-        name: 'PlaylistSong_song_id_fk',
-        table: 'Song',
+        name: 'playlist_songs_song_id_fk',
+        table: 'songs',
         mapping: 'id',
         rules: {
           onDelete: "NO ACTION"
@@ -77,8 +77,8 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('PlaylistSong')
-  db.dropTable('Playlist');
+  db.dropTable('playlist_songs')
+  db.dropTable('playlists');
   callback();
 };
 
