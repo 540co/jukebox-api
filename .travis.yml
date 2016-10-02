@@ -11,3 +11,5 @@ services:
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 script: ls
+notifications:
+  webhooks: https://hooks.devops.540.co/travisci
