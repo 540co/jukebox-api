@@ -14,6 +14,16 @@ git clone git@github.com:540co/jukebox-api.git
 cd jukebox-api
 ```
 
+#### Creating a DB for the application to connect to (optional)
+
+This step is optional if you already have the database created.  This assumes that you've only installed `db-migrate` locally from the `npm install` above.  If you need further guidance on `db-migrated` [go here](https://db-migrate.readthedocs.io/en/latest/)
+
+```
+docker-compose run app ./node_modules/db-migrate/bin/db-migrate db:create mydb
+```
+
+This will create a database call `mydb`.
+
 #### Configuring the application
 
 Run the following commands from the root directory of the repository (update instructions as needed for Windows commands/utilities):
@@ -28,7 +38,7 @@ Update the PostgreSQL environment variables to correspond with the appropriate v
 ```
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=
-POSTGRES_DB=postgres
+POSTGRES_DB=mydb
 ```
 
 #### Building the application
