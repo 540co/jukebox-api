@@ -42,13 +42,9 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db) {
-  return null;
+  db.runSql("delete from albums where 1=1", callback());
 };
 
 exports._meta = {
   "version": 1
 };
-
-function inserts() {
-
-}
