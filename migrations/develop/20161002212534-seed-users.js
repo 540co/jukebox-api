@@ -20,10 +20,11 @@ exports.setup = function(options, seedLink) {
 exports.up = function(db, callback) {
   var columns = [ "username", "password", "firstName", "lastName", "createdAt", "updatedAt" ];
   var arrayOfInserts = [
-    ['twhite', md5('twhite'), 'Trey', 'White'],
-    ['jaltman', md5('jaltman'), 'Jeremy', 'Altman'],
-    ['drisacher', md5('drisacher'), 'Dan', 'Risacher'],
-    ['jobrien', md5('jobrien'), 'John', 'O\'Brien']
+    ['gwashington', md5('george1'), 'George', 'Washington'],
+    ['jadams', md5('john2'), 'John', 'Adams'],
+    ['tjefferson', md5('thomas3'), 'Thomas', 'Jefferson'],
+    ['jmadison', md5('james4'), 'James', 'Madison'],
+    ['jmonroe', md5('james5'), 'James', 'Monroe']
   ];
 
   helper.seedWithTimestamps(db, 'users', columns, arrayOfInserts);
