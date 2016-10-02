@@ -23,7 +23,6 @@ exports.up = function(db, callback) {
       notNull: true,
       autoIncrement: true
     },
-    href: {type: 'string', notNull: true},
     name: {type: 'string', notNull: true},
     user_id: {
       type: 'int',
