@@ -17,7 +17,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  var columns = [ "name", "createdAt", "updatedAt" ];
+  var columns = [ "name" ];
   var arrayOfInserts = [
     ['AC/DC'],
     ['Black Sabbath'],

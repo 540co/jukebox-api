@@ -16,6 +16,9 @@ function seed(db, tableName, columns, arrayOfInserts) {
  * supplied arrayOfInserts
  */
 function seedWithTimestamps(db, tableName, columns, arrayOfInserts) {
+  columns.push("createdAt");
+  columns.push("updatedAt");
+
   var counter = 0;
   while(counter < arrayOfInserts.length) {
     arrayOfInserts[counter].push("now()"); // Adding createdAt timestamp

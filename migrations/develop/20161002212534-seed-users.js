@@ -18,7 +18,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  var columns = [ "username", "password", "firstName", "lastName", "createdAt", "updatedAt" ];
+  var columns = [ "username", "password", "firstName", "lastName" ];
   var arrayOfInserts = [
     ['gwashington', md5('george1'), 'George', 'Washington'],
     ['jadams', md5('john2'), 'John', 'Adams'],

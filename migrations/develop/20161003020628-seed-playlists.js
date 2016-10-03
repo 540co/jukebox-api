@@ -17,7 +17,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  var columns = [ "name", "user_id", "createdAt", "updatedAt" ];
+  var columns = [ "name", "user_id" ];
 
   helper.getAttributeIdMap(db, 'users', 'username').then(function(userMap) {
     var arrayOfInserts = [
