@@ -1,21 +1,37 @@
 function MigrationHelper() {}
 
 /**
- * This function seeds data provided and adds on the needed timestamps to the
- * supplied arrayOfInserts
+ * This function seeds data provided for the supplied arrayOfInserts
  */
-function seedWithTimestamps(db, tableName, columns, arrayOfInserts) {
+function seed(db, tableName, columns, arrayOfInserts) {
   var counter = 0;
   while(counter < arrayOfInserts.length) {
-    arrayOfInserts[counter].push("now()"); // Adding createdAt timestamp
-    arrayOfInserts[counter].push("now()"); // Adding updatedAt timestamp
     db.insert(tableName, columns, arrayOfInserts[counter], function() {})
     counter++;
   }
 }
 
 /**
- *
+ * This function seeds data provided and adds on the needed timestamps to the
+ * supplied arrayOfInserts
+ */
+function seedWithTimestamps(db, tableName, columns, arrayOfInserts) {
+  columns.push("createdAt");
+  columns.push("updatedAt");
+
+  var counter = 0;
+  while(counter < arrayOfInserts.length) {
+    arrayOfInserts[counter].push("now()"); // Adding createdAt timestamp
+    arrayOfInserts[counter].push("now()"); // Adding updatedAt timestamp
+    counter++;
+  }
+
+  seed(db, tableName, columns, arrayOfInserts);
+}
+
+/**
+ * This function creates an array with ID indexes for the table and attribute
+ * (value) as supplied.  This function is setup to be used with promises.
  */
 function getAttributeIdMap(db, tableName, value) {
   return {
@@ -32,6 +48,7 @@ function getAttributeIdMap(db, tableName, value) {
 }
 
 MigrationHelper.prototype = {
+  seed: seed,
   seedWithTimestamps: seedWithTimestamps,
   getAttributeIdMap: getAttributeIdMap
 }

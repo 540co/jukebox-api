@@ -17,7 +17,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  var columns = [ "artist_id", "title", "coverArt", "releasedAt", "createdAt", "updatedAt" ];
+  var columns = [ "artist_id", "title", "coverArt", "releasedAt" ];
 
   helper.getAttributeIdMap(db, 'artists', 'name').then(function(artistMap) {
     var arrayOfInserts = [
