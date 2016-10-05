@@ -16,7 +16,7 @@ cd jukebox-api
 
 #### Creating a DB for the application to connect to (optional)
 
-This step is optional if you already have the database created.  This assumes that you've only installed `db-migrate` locally from the `npm install` above.  If you need further guidance on `db-migrated` [go here](https://db-migrate.readthedocs.io/en/latest/)
+This step is optional if you already have the database created.  This assumes that you've only installed `db-migrate` locally from the `npm install` above.  If you need further guidance on `db-migrate` [go here](https://db-migrate.readthedocs.io/en/latest/)
 
 ```
 docker-compose run app ./node_modules/db-migrate/bin/db-migrate db:create mydb
