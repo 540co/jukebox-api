@@ -3,9 +3,9 @@ node_js:
   - "4.6"
 branches:
   only:
-  - master
-  - develop
-  - travis
+    - master
+    - develop
+    - travis
 services:
   - postgresql
 before_script:

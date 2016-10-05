@@ -4,17 +4,22 @@ services:
     build: .
     command: node_modules/.bin/nodemon bin/www
     ports:
-     - "3000:3000"
+      - "3000:3000"
     volumes:
-     - .:/usr/src/app
-     - /usr/src/app/node_modules
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
-     - db
+      - db
     env_file:
-     - .env
+      - .env
   db:
-    image: postgres
+    image: postgres:9.5.2
     ports:
-     - "5432:5432"
+      - "5432:5432"
+    volumes_from:
+      - db_data
+  db_data:
+    image: postgres:9.5.2
+    command: /bin/true
     volumes:
-     - /var/lib/postgresql/data
+      - /var/lib/postgresql/data
