@@ -19,7 +19,10 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
+install: true
+
 script:
   - docker-compose build
   - docker-compose up -d db
+  - sleep 10
   - docker-compose run app rake db:create
