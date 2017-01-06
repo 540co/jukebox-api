@@ -19,9 +19,6 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
-before_script:
-  - cp config/database.yml.travis config/database.yml
-
 script:
   - docker-compose build
   - docker-compose run app rake db:create
