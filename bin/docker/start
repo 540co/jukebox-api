@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Check to see if all dependencies are installed, if not, install them.
+bundle check || bundle install
+
+# If the app is not shut down properly, server.pid does not get
+# removed.  Explicitly remove server.pid before starting the app.
+rm -f tmp/pids/server.pid
+
+# Start the application
+bundle exec rails s -b 0.0.0.0
