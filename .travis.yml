@@ -11,7 +11,7 @@ branches:
     - master
     - develop
     - testing
-    - feature/rails
+    - rails
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
