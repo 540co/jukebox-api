@@ -15,3 +15,5 @@ RUN bundle install
 
 # Add app code
 ADD . /usr/src/app
+
+CMD ["/usr/src/app/bin/docker/start"]
