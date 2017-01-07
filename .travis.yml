@@ -26,3 +26,10 @@ script:
   - docker-compose up -d db
   - sleep 10
   - docker-compose run app rake db:create
+
+after_success:
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - `aws ecr get-login --region us-east-1`
+  - docker tag app:latest ${ECR_REPO}:${TRAVIS_BRANCH}
+  - docker push ${ECR_REPO}:${TRAVIS_BRANCH}
