@@ -1,15 +1,57 @@
-language: node_js
-node_js:
-  - "4.6"
+sudo: required
+
+services:
+  - docker
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.9.0
+
 branches:
   only:
     - master
     - develop
-    - travis
-services:
-  - postgresql
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-script: ls
-notifications:
-  webhooks: https://hooks.devops.540.co/travisci
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - mv .env.example .env
+
+install: true
+
+script:
+  - docker-compose build
+  - docker-compose up -d db
+  - sleep 10
+  - docker-compose run app rake db:create
+
+before_deploy:
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - export DOCKER_TAG="$ECR_REPO:$TRAVIS_BRANCH"
+  - aws s3 rm s3://540-jukebox-api/$TRAVIS_BRANCH --recursive
+  - eval $(aws ecr get-login --region us-east-1)
+  - docker tag jukeboxapi_app:latest $DOCKER_TAG
+  - docker push $DOCKER_TAG
+  - grep -rl 'DOCKER_TAG' .codedeploy/scripts | xargs sed -i "s/DOCKER_TAG/$DOCKER_TAG/g"
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    skip_cleanup: true
+    bucket: 540-jukebox-api
+    local-dir: .codedeploy
+    upload-dir: $TRAVIS_BRANCH
+    on:
+      all_branches: true
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: 540-jukebox-api
+    key: $TRAVIS_BRANCH
+    application: jukebox-api
+    deployment_group: "jukebox-api-$TRAVIS_BRANCH"
+    on:
+      all_branches: true
