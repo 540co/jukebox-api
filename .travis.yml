@@ -27,36 +27,23 @@ script:
   - docker-compose run app rake db:create
 
 before_deploy:
-  - >
-    if ! [ "$BEFORE_DEPLOY_RUN" ]; then
-      export BEFORE_DEPLOY_RUN=1;
-      pip install --user awscli;
-      export PATH=$PATH:$HOME/.local/bin;
-      export DOCKER_TAG="$ECR_REPO:$TRAVIS_BRANCH";
-      echo "DOCKER_TAG=$DOCKER_TAG";
-      aws s3 rm s3://540-jukebox-api/$TRAVIS_BRANCH --recursive;
-      eval $(aws ecr get-login --region us-east-1);
-      docker tag jukeboxapi_app:latest $DOCKER_TAG;
-      docker push $DOCKER_TAG;
-      sed -i -e "s|DOCKER_TAG|$DOCKER_TAG|g" ./.codedeploy/scripts/docker_pull.sh;
-      sed -i -e "s|DOCKER_TAG|$DOCKER_TAG|g" ./.codedeploy/scripts/start.sh;
-    fi
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - export DOCKER_TAG="$ECR_REPO:$TRAVIS_BRANCH"
+  - eval $(aws ecr get-login --region us-east-1)
+  - docker tag jukeboxapi_app:latest $DOCKER_TAG
+  - docker push $DOCKER_TAG
+  - sed -i -e "s|DOCKER_TAG|$DOCKER_TAG|g" ./.codedeploy/scripts/docker_pull.sh
+  - sed -i -e "s|DOCKER_TAG|$DOCKER_TAG|g" ./.codedeploy/scripts/start.sh
+  - cd .codedeploy/; zip -r "../$TRAVIS_BRANCH.zip" ./*; cd ..;
+  - aws s3 cp "$TRAVIS_BRANCH.zip" s3://540-jukebox-api/codedeploy/
 
 deploy:
-  - provider: s3
-    access_key_id: $AWS_ACCESS_KEY_ID
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
-    skip_cleanup: true
-    bucket: 540-jukebox-api
-    local-dir: .codedeploy
-    upload-dir: $TRAVIS_BRANCH
-    on:
-      all_branches: true
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: 540-jukebox-api
-    key: $TRAVIS_BRANCH
+    key: "codedeploy/$TRAVIS_BRANCH.zip"
     application: jukebox-api
     deployment_group: "jukebox-api-$TRAVIS_BRANCH"
     on:
