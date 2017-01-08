@@ -34,7 +34,7 @@ before_deploy:
   - eval $(aws ecr get-login --region us-east-1)
   - docker tag jukeboxapi_app:latest $DOCKER_TAG
   - docker push $DOCKER_TAG
-  - sed -i -e "s/DOCKER_TAG/$DOCKER_TAG/g" .codedeploy/scripts/*
+  - grep -rl 'DOCKER_TAG' .codedeploy/scripts | xargs sed -i -e "s/DOCKER_TAG/$DOCKER_TAG/g"
 
 deploy:
   - provider: s3
