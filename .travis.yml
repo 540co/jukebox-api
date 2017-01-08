@@ -30,6 +30,7 @@ before_deploy:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
   - export DOCKER_TAG="$ECR_REPO:$TRAVIS_BRANCH"
+  - echo "DOCKER_TAG=$DOCKER_TAG"
   - aws s3 rm s3://540-jukebox-api/$TRAVIS_BRANCH --recursive
   - eval $(aws ecr get-login --region us-east-1)
   - docker tag jukeboxapi_app:latest $DOCKER_TAG
