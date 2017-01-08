@@ -10,8 +10,6 @@ branches:
   only:
     - master
     - develop
-    - testing
-    - rails
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -30,18 +28,29 @@ script:
 before_deploy:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
+  - export DOCKER_TAG="$ECR_REPO:$TRAVIS_BRANCH"
+  - aws s3 rm s3://540-jukebox-api/$TRAVIS_BRANCH --recursive
   - eval $(aws ecr get-login --region us-east-1)
-  - docker tag jukeboxapi_app:latest ${ECR_REPO}:${TRAVIS_BRANCH}
-  - docker push ${ECR_REPO}:${TRAVIS_BRANCH}
-  - sed -i -e "s/DOCKER_IMAGE_NAME/${ECR_REPO}:${TRAVIS_BRANCH}/" Dockerrun.aws.json
+  - docker tag jukeboxapi_app:latest $DOCKER_TAG
+  - docker push $DOCKER_TAG
+  - grep -rl 'DOCKER_TAG' .codedeploy/scripts | xargs sed -i "s/DOCKER_TAG/$DOCKER_TAG/g"
 
 deploy:
-  - provider: elasticbeanstalk
-    app: jukebox-api
-    env: rails
-    bucket_name: 540co-jukebox-api
-    bucket_path: eb/rails
-    zip_file: Dockerrun.aws.json
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
     skip_cleanup: true
+    bucket: 540-jukebox-api
+    local-dir: .codedeploy
+    upload-dir: $TRAVIS_BRANCH
     on:
-      branch: rails
+      all_branches: true
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: 540-jukebox-api
+    key: $TRAVIS_BRANCH
+    application: jukebox-api
+    deployment_group: "jukebox-api-$TRAVIS_BRANCH"
+    on:
+      all_branches: true
