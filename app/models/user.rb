@@ -1,6 +1,7 @@
 require 'digest'
 
 class User < ApplicationRecord
+  has_many :playlists
   validates :username, presence: true
   validates :password_hash, presence: true
   validates :token, presence: true

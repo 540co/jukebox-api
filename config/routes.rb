@@ -7,9 +7,13 @@ Rails.application.routes.draw do
       resources :artists, only: [:index, :show] do
         get :albums, on: :member
       end
+      resources :playlists, only: [:index, :show] do
+        get :songs, on: :member
+      end
       resources :songs, only: [:index, :show]
       resources :users, only: [:index, :show] do
         get 'current', on: :collection
+        get :playlists, on: :member
       end
     end
   end

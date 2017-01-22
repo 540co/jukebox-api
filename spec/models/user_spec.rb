@@ -7,4 +7,5 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of(:token) }
 
   # Test Associations
+  it { should have_many(:playlists) }
 end

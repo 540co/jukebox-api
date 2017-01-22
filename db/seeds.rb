@@ -6,13 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.find_or_create_by(username: "admin") do |user|
+user_1 = User.find_or_create_by(username: "admin") do |user|
   user.first_name = "John"
   user.last_name = "Smith"
   user.password = "Mu$1c"
 end
 
-User.find_or_create_by(username: "user") do |user|
+user_2 = User.find_or_create_by(username: "user") do |user|
   user.first_name = "Jessica"
   user.last_name = "Smith"
   user.password = "$0unD"
@@ -153,3 +153,37 @@ song_114 = album_11.songs.find_or_create_by(title: 'Needs His Woman', duration: 
 song_115 = album_11.songs.find_or_create_by(title: 'She\'s Gone', duration: '4:45')
 song_116 = album_11.songs.find_or_create_by(title: 'You Were There', duration: '5:31')
 song_117 = album_11.songs.find_or_create_by(title: 'Inside of Me', duration: '5:25')
+
+playlist_1 = user_1.playlists.find_or_create_by(name: 'Favorites')
+playlist_2 = user_2.playlists.find_or_create_by(name: 'For Those About to Rock')
+playlist_3 = user_2.playlists.find_or_create_by(name: 'Workout Mix')
+
+PlaylistSong.find_or_create_by(playlist_id: playlist_1.id, song_id: song_68.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_1.id, song_id: song_64.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_1.id, song_id: song_116.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_1.id, song_id: song_14.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_1.id, song_id: song_10.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_1.id, song_id: song_39.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_1.id, song_id: song_31.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_42.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_32.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_46.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_5.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_114.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_100.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_94.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_73.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_56.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_55.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_104.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_78.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_74.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_2.id, song_id: song_84.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_3.id, song_id: song_84.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_3.id, song_id: song_52.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_3.id, song_id: song_7.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_3.id, song_id: song_24.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_3.id, song_id: song_36.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_3.id, song_id: song_30.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_3.id, song_id: song_70.id)
+PlaylistSong.find_or_create_by(playlist_id: playlist_3.id, song_id: song_74.id)
