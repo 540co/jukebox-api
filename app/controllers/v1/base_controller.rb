@@ -2,10 +2,12 @@ require 'digest'
 
 class V1::BaseController < ApplicationController
   include ActionView::Layouts
+  include V1::ValidateWithJsonSchema
   before_action :validate_token
   rescue_from V1::Exceptions::UnauthorizedError, with: :unauthorized
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :bad_request
+  rescue_from JSON::Schema::ValidationError, with: :bad_request
   layout 'v1/layouts/default'
 
   private

@@ -4,5 +4,6 @@ module V1
     class AuthorizationError < StandardError; end
     class UnauthorizedError < AuthenticationError; end
     class ForbiddenError < AuthorizationError; end
+    class BadRequestError < StandardError; end
   end
 end

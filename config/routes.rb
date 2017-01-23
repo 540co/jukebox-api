@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       end
       resources :playlists, only: [:index, :show] do
         get :songs, on: :member
+        post :songs, on: :member, to: 'playlists#songs_add'
+        delete :songs, on: :member, to: 'playlists#songs_delete'
       end
       resources :songs, only: [:index, :show]
       resources :users, only: [:index, :show] do
