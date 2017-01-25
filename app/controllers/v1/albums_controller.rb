@@ -4,7 +4,7 @@ class V1::AlbumsController < V1::BaseController
   end
 
   def show
-    @album = Album.find(params[:id]).includes(:artist)
+    @album = Album.includes(:artist).find(params[:id])
   end
 
   def songs
