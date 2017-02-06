@@ -18,7 +18,7 @@ class V1::PlaylistsController < V1::BaseController
 
   def update
     @playlist = Playlist.find(params[:id])
-    @playlist.update(playlist_params)
+    @playlist.update!(playlist_params)
     render :show
   end
 
