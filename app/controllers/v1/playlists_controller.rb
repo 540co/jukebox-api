@@ -1,13 +1,31 @@
 class V1::PlaylistsController < V1::BaseController
 
   before_action :validate_json_params, only: [:songs_add, :songs_delete]
+  before_action :transform_params, only: [:create, :update]
 
   def index
     @playlists = Playlist.all
   end
 
+  def create
+    @playlist = Playlist.create!(playlist_params)
+    render :show
+  end
+
   def show
     @playlist = Playlist.find(params[:id])
+  end
+
+  def update
+    @playlist = Playlist.find(params[:id])
+    @playlist.update(playlist_params)
+    render :show
+  end
+
+  def destroy
+    playlist = Playlist.find(params[:id])
+    playlist.destroy
+    head :no_content
   end
 
   def songs
@@ -42,6 +60,16 @@ class V1::PlaylistsController < V1::BaseController
   end
 
   private
+
+  def transform_params
+    if params[:data]
+      params[:data][:user_id] = params[:data][:user][:id] if params[:data][:user]
+    end
+  end
+
+  def playlist_params
+    params.require(:data).permit(:name, :user_id)
+  end
 
   def song_ids_from_request
     return @song_ids_from_request unless @song_ids_from_request.nil?
