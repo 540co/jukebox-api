@@ -1,9 +1,5 @@
 module V1::Eads
   module Sortable
-    extend ActiveSupport::Concern
-
-    included do
-    end
 
     def sort_fields
       fields = []
@@ -20,8 +16,8 @@ module V1::Eads
       fields.join(',')
     end
 
-    def eads_sort(relation)
-      relation = relation.order(sort_fields)
+    def sort(relation)
+      relation.order(sort_fields)
     end
   end
 end

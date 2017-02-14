@@ -14,7 +14,7 @@ class V1::UsersController < V1::BaseController
 
   def playlists
     user = User.find(params[:id])
-    @playlists = user.playlists
+    @playlists = eads(user.playlists)
     render 'v1/playlists/index'
   end
 end
