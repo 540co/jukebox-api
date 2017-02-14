@@ -2,7 +2,7 @@ module V1::Eads
   module Limitable
 
     DEFAULT_LIMIT = 10.freeze
-    MAX_LIMIT = 20.freeze
+    MAX_LIMIT = 50.freeze
 
     def limit_fields
       limit = DEFAULT_LIMIT
