@@ -1,6 +1,6 @@
 class V1::ArtistsController < V1::BaseController
   def index
-    @artists = Artist.all
+    @artists = eads(Artist.all)
   end
 
   def show
@@ -9,7 +9,7 @@ class V1::ArtistsController < V1::BaseController
 
   def albums
     artist = Artist.find(params[:id])
-    @albums = artist.albums
+    @albums = eads(artist.albums)
 
     render 'v1/albums/index'
   end

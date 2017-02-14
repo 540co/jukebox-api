@@ -1,6 +1,6 @@
 class V1::UsersController < V1::BaseController
   def index
-    @users = User.all
+    @users = eads(User.all)
   end
 
   def show

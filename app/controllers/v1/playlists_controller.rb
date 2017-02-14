@@ -4,7 +4,7 @@ class V1::PlaylistsController < V1::BaseController
   before_action :transform_params, only: [:create, :update]
 
   def index
-    @playlists = Playlist.all
+    @playlists = eads(Playlist.all)
   end
 
   def create
@@ -30,7 +30,7 @@ class V1::PlaylistsController < V1::BaseController
 
   def songs
     playlist = Playlist.find(params[:id])
-    @songs = playlist.songs
+    @songs = eads(playlist.songs)
     render 'v1/songs/index'
   end
 
