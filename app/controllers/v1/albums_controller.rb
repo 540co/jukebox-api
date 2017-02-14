@@ -1,6 +1,7 @@
 class V1::AlbumsController < V1::BaseController
+
   def index
-    @albums = Album.all.includes(:artist)
+    @albums = eads(Album.all.includes(:artist))
   end
 
   def show
