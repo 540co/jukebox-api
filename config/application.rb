@@ -1,4 +1,5 @@
 require_relative 'boot'
+require_relative '../app/middleware/response_time.rb'
 
 require "rails"
 # Pick the frameworks you want:
@@ -26,5 +27,6 @@ module JukeboxApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.middleware.insert_before Rack::Runtime, ResponseTime
   end
 end

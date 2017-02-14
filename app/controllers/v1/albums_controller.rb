@@ -10,7 +10,7 @@ class V1::AlbumsController < V1::BaseController
 
   def songs
     album = Album.find(params[:id])
-    @songs = album.songs
+    @songs = eads(album.songs)
 
     render 'v1/songs/index'
   end
