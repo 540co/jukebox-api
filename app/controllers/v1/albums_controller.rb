@@ -1,7 +1,7 @@
 class V1::AlbumsController < V1::BaseController
 
   def index
-    @albums = eads(Album.all.includes(:artist))
+    @albums = eads_list(Album.all.includes(:artist))
   end
 
   def show
@@ -10,7 +10,7 @@ class V1::AlbumsController < V1::BaseController
 
   def songs
     album = Album.find(params[:id])
-    @songs = eads(album.songs)
+    @songs = eads_list(album.songs)
 
     render 'v1/songs/index'
   end
