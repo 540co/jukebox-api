@@ -13,5 +13,10 @@ module V1
       # paginate MUST be called last
       relation = paginate(relation)
     end
+
+    def eads_instance(instance)
+      @responseType = instance.class.name
+      instance
+    end
   end
 end
