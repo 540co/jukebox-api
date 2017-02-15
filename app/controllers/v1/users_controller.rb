@@ -4,11 +4,11 @@ class V1::UsersController < V1::BaseController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = eads_instance(User.find(params[:id]))
   end
 
   def current
-    @user = current_user
+    @user = eads_instance(current_user)
     render :show
   end
 

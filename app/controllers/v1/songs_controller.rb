@@ -4,6 +4,6 @@ class V1::SongsController < V1::BaseController
   end
 
   def show
-    @song = Song.find(params[:id])
+    @song = eads_instance(Song.find(params[:id]))
   end
 end

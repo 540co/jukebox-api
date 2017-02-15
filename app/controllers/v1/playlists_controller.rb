@@ -8,16 +8,16 @@ class V1::PlaylistsController < V1::BaseController
   end
 
   def create
-    @playlist = Playlist.create!(playlist_params)
+    @playlist = eads_instance(Playlist.create!(playlist_params))
     render :show
   end
 
   def show
-    @playlist = Playlist.find(params[:id])
+    @playlist = eads_instance(Playlist.find(params[:id]))
   end
 
   def update
-    @playlist = Playlist.find(params[:id])
+    @playlist = eads_instance(Playlist.find(params[:id]))
     @playlist.update!(playlist_params)
     render :show
   end
