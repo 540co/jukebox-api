@@ -1,10 +1,10 @@
 module V1::Eads
-  module Limitable
+  module Pageable
 
     DEFAULT_LIMIT = 10.freeze
     MAX_LIMIT = 50.freeze
 
-    def limit_fields
+    def pagination_fields
       limit = DEFAULT_LIMIT
       offset = 0
 
@@ -18,7 +18,7 @@ module V1::Eads
 
     def paginate(relation)
       total_count = relation.count
-      limit, offset = limit_fields
+      limit, offset = pagination_fields
       relation = relation.limit(limit).offset(offset)
       count = relation.count
       @pagination = {

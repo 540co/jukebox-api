@@ -1,6 +1,6 @@
 class V1::SongsController < V1::BaseController
   def index
-    @songs = eads(Song.all)
+    @songs = eads_list(Song.all)
   end
 
   def show
