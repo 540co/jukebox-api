@@ -1,6 +1,7 @@
 module V1
   module Eads
     extend ActiveSupport::Concern
+    include Filterable
     include Pageable
     include Sortable
 
@@ -9,6 +10,7 @@ module V1
 
     def eads_list(relation)
       @responseType = relation.klass.name
+      relation = filter(relation)
       relation = sort(relation)
       # paginate MUST be called last
       relation = paginate(relation)
