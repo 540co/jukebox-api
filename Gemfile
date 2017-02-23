@@ -13,6 +13,11 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+# Build JSON APIs using Active Model Serializers
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
+gem 'multi_json'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
