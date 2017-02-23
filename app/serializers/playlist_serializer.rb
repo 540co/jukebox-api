@@ -4,11 +4,14 @@ class PlaylistSerializer < ActiveModel::Serializer
     attributes :id, :href, :name
   end
 
-  attributes :id, :href, :name, :songs, :created_at, :updated_at
-  has_one :user, serializer: UserSerializer::Summary
+  attributes :id, :href, :name, :user, :songs, :created_at, :updated_at
 
   def href
     Rails.application.routes.url_helpers.v1_playlist_path(object)
+  end
+
+  def user
+    UserSerializer::Summary.new(object.user)
   end
 
   def songs_href

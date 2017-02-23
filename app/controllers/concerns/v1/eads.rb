@@ -2,6 +2,7 @@ module V1
   module Eads
     extend ActiveSupport::Concern
     include Filterable
+    include Limitable
     include Pageable
     include Sortable
 
@@ -10,18 +11,17 @@ module V1
 
     def eads_list(relation)
       @responseType = relation.klass.name
+      @responseFields = limit_fields
       relation = filter(relation)
       relation = sort(relation)
       # paginate MUST be called after filter
       relation = paginate(relation)
-      # eads_meta MUST be called after paginate
-      @responseMeta = eads_meta
       relation
     end
 
     def eads_instance(instance)
       @responseType = instance.class.name
-      @responseMeta = eads_meta
+      @responseFields = limit_fields
       instance
     end
 
@@ -33,6 +33,15 @@ module V1
       meta[:user] = @current_user.id if @current_user
       meta[:pagination] = @pagination if @pagination
       meta
+    end
+
+    def eads_options
+      options = {
+        root: 'data',
+        meta: eads_meta
+      }
+      options[:fields] = @responseFields if @responseFields
+      options
     end
   end
 end
