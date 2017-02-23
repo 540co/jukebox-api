@@ -5,21 +5,23 @@ class V1::PlaylistsController < V1::BaseController
 
   def index
     @playlists = eads_list(Playlist.all)
+    render json: @playlists, root: 'data', meta: @responseMeta, each_serializer: PlaylistSerializer::Summary
   end
 
   def create
     @playlist = eads_instance(Playlist.create!(playlist_params))
-    render :show
+    render json: @playlist, root: 'data', meta: @responseMeta
   end
 
   def show
     @playlist = eads_instance(Playlist.find(params[:id]))
+    render json: @playlist, root: 'data', meta: @responseMeta
   end
 
   def update
     @playlist = eads_instance(Playlist.find(params[:id]))
     @playlist.update!(playlist_params)
-    render :show
+    render json: @playlist, root: 'data', meta: @responseMeta
   end
 
   def destroy
@@ -31,7 +33,7 @@ class V1::PlaylistsController < V1::BaseController
   def songs
     playlist = Playlist.find(params[:id])
     @songs = eads_list(playlist.songs)
-    render 'v1/songs/index'
+    render json: @songs, root: 'data', meta: @responseMeta, each_serializer: SongSerializer::Summary
   end
 
   def songs_add
