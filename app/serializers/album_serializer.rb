@@ -1,15 +1,17 @@
 class AlbumSerializer < ActiveModel::Serializer
 
   class Summary < AlbumSerializer
-    attributes :id, :href, :title, :cover_art
-    has_one :artist, serializer: ArtistSerializer::Summary
+    attributes :id, :href, :title, :cover_art, :artist
   end
 
-  attributes :id, :href, :title, :cover_art, :released_on, :songs, :created_at, :updated_at
-  has_one :artist, serializer: ArtistSerializer::Summary
+  attributes :id, :href, :title, :cover_art, :released_on, :artist, :songs, :created_at, :updated_at
 
   def href
     Rails.application.routes.url_helpers.v1_album_path(object)
+  end
+
+  def artist
+    ArtistSerializer::Summary.new(object.artist)
   end
 
   def songs_href
