@@ -33,18 +33,22 @@ class V1::BaseController < ApplicationController
   end
 
   def unauthorized
-    render json: {error: 'Unauthorized'}.to_json, status: 401
+    @error = V1::Exceptions::Error.new(developer_message: 'Unauthorized', error_code: '401')
+    render json: @error, root: 'error', serializer: ErrorSerializer, status: 401
   end
 
   def forbidden
-    render json: {error: 'Forbidden'}.to_json, status: 403
+    @error = V1::Exceptions::Error.new(developer_message: 'Forbidden', error_code: '403')
+    render json: @error, root: 'error', serializer: ErrorSerializer, status: 403
   end
 
   def record_not_found
-    render json: {error: 'Record Not Found'}.to_json, status: 404
+    @error = V1::Exceptions::Error.new(developer_message: 'Record Not Found', error_code: '404')
+    render json: @error, root: 'error', serializer: ErrorSerializer, status: 404
   end
 
   def bad_request
-    render json: {error: 'Bad Request'}.to_json, status: 400
+    @error = V1::Exceptions::Error.new(developer_message: 'Bad Request', error_code: '400')
+    render json: @error, root: 'error', serializer: ErrorSerializer, status: 400
   end
 end
