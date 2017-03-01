@@ -1,0 +1,28 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  host: <%= ENV.fetch("DEV_DB_HOST") { 'db' } %>
+  port: <%= ENV.fetch("DEV_DB_PORT") { 5432 } %>
+  database: <%= ENV.fetch("DEV_DB_NAME") { 'jukebox-api_development' } %>
+  username: <%= ENV.fetch("DEV_DB_USER") { 'postgres' } %>
+  password: <%= ENV.fetch("DEV_DB_PASS") { '' } %>
+
+test:
+  <<: *default
+  host: <%= ENV.fetch("TEST_DB_HOST") { 'db' } %>
+  port: <%= ENV.fetch("TEST_DB_PORT") { 5432 } %>
+  database: <%= ENV.fetch("TEST_DB_NAME") { 'jukebox-api_test' } %>
+  username: <%= ENV.fetch("TEST_DB_USER") { 'postgres' } %>
+  password: <%= ENV.fetch("TEST_DB_PASS") { '' } %>
+
+production:
+  <<: *default
+  database: <%= ENV['PROD_DB_HOST'] %>
+  database: <%= ENV['PROD_DB_PORT'] %>
+  database: <%= ENV['PROD_DB_NAME'] %>
+  username: <%= ENV['PROD_DB_USER'] %>
+  password: <%= ENV['PROD_DB_PASS'] %>

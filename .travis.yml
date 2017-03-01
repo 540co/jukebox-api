@@ -1,0 +1,52 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.9.0
+
+branches:
+  only:
+    - master
+    - develop
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - mv .env.example .env
+
+install: true
+
+script:
+  - docker-compose build
+  - docker-compose up -d db
+  - sleep 10
+  - docker-compose run --rm app rails db:create
+  - docker-compose run --rm app rails db:migrate
+  - docker-compose run --rm app rspec
+
+before_deploy:
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - export DOCKER_TAG="$ECR_REPO:$TRAVIS_BRANCH"
+  - eval $(aws ecr get-login --region us-east-1)
+  - docker tag jukeboxapi_app:latest $DOCKER_TAG
+  - docker push $DOCKER_TAG
+  - sed -i -e "s|DOCKER_TAG|$DOCKER_TAG|g" ./.codedeploy/scripts/docker_pull.sh
+  - sed -i -e "s|DOCKER_TAG|$DOCKER_TAG|g" ./.codedeploy/scripts/start.sh
+  - cd .codedeploy/; zip -r "../$TRAVIS_BRANCH.zip" ./*; cd ..;
+  - aws s3 cp "$TRAVIS_BRANCH.zip" s3://540-jukebox-api/codedeploy/
+
+deploy:
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: 540-jukebox-api
+    key: "codedeploy/$TRAVIS_BRANCH.zip"
+    application: jukebox-api
+    deployment_group: "jukebox-api-$TRAVIS_BRANCH"
+    on:
+      all_branches: true

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/hyper-schema",
+  "type": "object",
+  "properties": {
+    "data": {
+      "description": "Required data object",
+      "type": "array",
+      "items": {
+        "$ref": "../resource_identifier.json"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ]
+}
